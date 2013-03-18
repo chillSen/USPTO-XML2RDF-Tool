@@ -26,12 +26,11 @@ public class XMLIterator {
 		File[] fileArray = f.listFiles();
 		for (int i = 0; i < fileArray.length; i++) {
 
-			if (fileArray[i].getName().endsWith(".xml")) {
+			if (fileArray[i].getName().toLowerCase().endsWith(".xml")) {
 
 				XSLTTransformer xt = new XSLTTransformer();
 				xt.read_section(fileArray[i].getAbsolutePath(),
-						xslt, fileArray[i].getAbsolutePath()
-								.replace(".xml", ".rdf"));
+						xslt, fileArray[i].getAbsolutePath().toLowerCase().replace(".xml", ".nt"));
 
 			}
 		}

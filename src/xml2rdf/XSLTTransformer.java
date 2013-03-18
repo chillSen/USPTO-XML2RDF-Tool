@@ -47,7 +47,10 @@ public class XSLTTransformer {
 
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer trans = tf.newTransformer(xsl);
+			trans.setOutputProperty(OutputKeys.METHOD, "text");
 			trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			trans.setOutputProperty(OutputKeys.INDENT, "yes");
+			
 			trans.transform(input, output);
 
 		} catch (Exception c) {
@@ -80,14 +83,16 @@ public class XSLTTransformer {
 			// reading XML file line by line
 			while ((line = reader.readLine()) != null)
 			{
-
+				//line = line.replace("&num;", "").replace("&apos;", "").replace("&ouml;", "").replace("&ldquo;", "").replace("&auml;", "").replace("&mdash;", "").replace("&plus;","").replace("&rdquo;", "").replace("&quest;", "").replace("&deg;", "").replace("&reg;", "").replace("&equals;","").replace("&","").replace(";", "");
 				if (!(line.contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") || line
 						.contains("<!DOCTYPE"))) {
+					//.contains("<!DOCTYPE") || line.contains("]>") || line.contains("<!ENTITY"))) {
 					stringBuilder.append(line);
 					stringBuilder.append(ls);
 				} else if (line.contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
 						&& firstTag == false) {
 					transform();
+				//} else if (line.contains("]>")) {
 				} else if (line.contains("<!DOCTYPE")) {
 					firstTag = false;
 				}
